@@ -1,0 +1,72 @@
+{
+  "name": "Motor Industrial Siemens 7ML1200",
+  "description": "Motor eléctrico trifásico de alta eficiencia para aplicaciones industriales pesadas. Diseñado para operación continua en entornos industriales exigentes.",
+  "image": "ipfs://QmXyZ1234567890abcdefghijklmnopqrstuvwxyz",
+  "attributes": [
+    {
+      "trait_type": "Tipo",
+      "value": "Motor Eléctrico Trifásico"
+    },
+    {
+      "trait_type": "Modelo",
+      "value": "Siemens 7ML1200"
+    },
+    {
+      "trait_type": "Estado",
+      "value": "Operativo"
+    },
+    {
+      "trait_type": "Potencia",
+      "value": "1200 HP"
+    },
+    {
+      "trait_type": "Voltaje",
+      "value": "480V"
+    },
+    {
+      "trait_type": "Frecuencia",
+      "value": "60 Hz"
+    },
+    {
+      "trait_type": "Eficiencia",
+      "value": "95.8%"
+    },
+    {
+      "trait_type": "Ubicación",
+      "value": "Planta A - Sector 3"
+    },
+    {
+      "trait_type": "Fecha de Instalación",
+      "value": "2023-03-15"
+    },
+    {
+      "trait_type": "Fabricante",
+      "value": "Siemens AG"
+    }
+  ],
+  "operationalData": {
+    "temperature": 75,
+    "rpm": 1750,
+    "lastMaintenance": 1703123456,
+    "totalOperatingHours": 8760
+  },
+  "maintenanceSchedule": {
+    "nextMaintenance": 1705723456,
+    "maintenanceInterval": 2592000,
+    "lastMaintenanceType": "Preventivo",
+    "nextMaintenanceType": "Preventivo"
+  },
+  "specifications": {
+    "weight": "850 kg",
+    "dimensions": "1200x800x600 mm",
+    "insulationClass": "F",
+    "protectionClass": "IP55",
+    "ambientTemperature": "-20°C to +40°C"
+  },
+  "warranty": {
+    "startDate": "2023-03-15",
+    "endDate": "2028-03-15",
+    "type": "Estándar",
+    "coverage": "5 años"
+  }
+} 
