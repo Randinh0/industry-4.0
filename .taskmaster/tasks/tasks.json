@@ -14,16 +14,87 @@
       },
       {
         "id": 2,
-        "title": "Desarrollo de Contratos ERC-721 para Tokenización de Activos",
-        "description": "Implementar contratos inteligentes basados en ERC-721 para la tokenización de activos industriales, permitiendo el registro y actualización de metadatos operativos on-chain.",
-        "details": "1. Crear contrato `IndustrialAssetNFT.sol` que extienda de ERC721URIStorage de OpenZeppelin\n2. Implementar funciones para:\n   - Acuñar tokens para nuevos activos industriales\n   - Actualizar metadatos operativos (estado, temperatura, RPM)\n   - Registrar historial de mantenimiento\n   - Asignar roles (operador, técnico, propietario)\n3. Estructura de metadatos JSON:\n```json\n{\n  \"name\": \"[Nombre del activo]\",\n  \"description\": \"[Descripción]\",\n  \"image\": \"[IPFS URI]\",\n  \"attributes\": [\n    {\"trait_type\": \"Tipo\", \"value\": \"[Tipo de maquinaria]\"}, \n    {\"trait_type\": \"Modelo\", \"value\": \"[Modelo]\"}, \n    {\"trait_type\": \"Estado\", \"value\": \"[Operativo/Mantenimiento/Inactivo]\"}\n  ],\n  \"operationalData\": {\n    \"temperature\": 0,\n    \"rpm\": 0,\n    \"lastMaintenance\": 0,\n    \"totalOperatingHours\": 0\n  }\n}\n```\n4. Implementar eventos para notificar cambios de estado\n5. Configurar almacenamiento en IPFS para metadatos extensos\n6. Implementar funciones de consulta para obtener datos operativos",
-        "testStrategy": "1. Tests unitarios con Hardhat para verificar:\n   - Acuñación correcta de tokens\n   - Actualización de metadatos\n   - Permisos y roles\n   - Eventos emitidos correctamente\n2. Tests de integración con metadatos IPFS\n3. Pruebas de gas optimization\n4. Auditoría de seguridad básica con herramientas como Slither\n5. Verificar compatibilidad con estándares ERC-721",
+        "title": "Tokenización y Coordinación Industrial On-Chain",
+        "description": "Diseñar y desplegar la lógica on-chain que representa máquinas, materias primas y procesos productivos, incluyendo coordinación, mantenimiento y trazabilidad.",
+        "details": "Subtareas:\n2.1 IndustrialAssetNFT v2 (ERC-721): Mejora del contrato existente para incluir nuevos roles, campos de metadatos y firma EIP-712.\n2.2 ProductionTrace1155 (ERC-1155): Tokenización de lotes de materia prima y registro de operaciones.\n2.3 MachineCoordinator (UUPS): Orquestación de procesos productivos con modos de máquina y SLA.\n2.4 MaintenanceEscrow (UUPS): Escrow en USDC con doble validación (técnico + Node-RED) y penalizaciones.\n2.5 ConsortiumConnect (Fabric & IOTA): Bridge y anclaje de datos de alta frecuencia.\n2.6 Test & Audit Suite: Hardhat-upgrades, Slither, Echidna y pruebas de estrés.\n\nConsorcios incluidos:\n- Hyperledger Fabric Bridge\n- IOTA Anchoring\n\nDependencias entre subtareas:\n- 2.3 depende de 2.1\n- 2.4 depende de 2.1 y 2.3\n- 2.5 depende de 2.2\n- 2.6 depende de 2.4 y 2.5",
+        "testStrategy": "Cada subtarea define pruebas unitarias e integración; la suite global (2.6) ejecuta escenarios end-to-end, análisis estático y fuzzing.",
         "priority": "high",
         "dependencies": [
           1
         ],
         "status": "in-progress",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "IndustrialAssetNFT v2 (ERC-721)",
+            "description": "Extender el contrato NFT existente con nuevos roles, metadatos y firma EIP-712.",
+            "details": "Implementar nuevos campos on-chain, roles AccessControl y función syncOperationalData.",
+            "testStrategy": "Tests Hardhat para mint, roles, syncOperationalData y eventos.",
+            "priority": "high",
+            "dependencies": [],
+            "status": "done"
+          },
+          {
+            "id": 2,
+            "title": "ProductionTrace1155 (ERC-1155)",
+            "description": "Crear contrato ERC-1155 para lotes de materia prima y sus operaciones.",
+            "details": "Funciones recordInput/recordOutput, eventos TraceRecorded y consulta de trazas.",
+            "testStrategy": "Tests de balances, transferencias y registro de trazabilidad.",
+            "priority": "high",
+            "dependencies": [],
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "MachineCoordinator (UUPS)",
+            "description": "Desarrollar coordinador de procesos productivos con reglas de secuencia y SLA.",
+            "details": "start/pause/resume/stop, setMachineMode y verificación de estados.",
+            "testStrategy": "Tests de transiciones válidas e inválidas y eventos.",
+            "priority": "high",
+            "dependencies": [
+              1
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "MaintenanceEscrow (UUPS)",
+            "description": "Implementar escrow USDC con doble validación.",
+            "details": "Funciones requestMaintenance, confirmService, releasePayment, penalizaciones y SLA.",
+            "testStrategy": "Tests de flujo completo escrow, roles y penalizaciones.",
+            "priority": "high",
+            "dependencies": [
+              1,
+              3
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "ConsortiumConnect (Fabric & IOTA)",
+            "description": "Bridge y anclaje de datos con Hyperledger Fabric e IOTA.",
+            "details": "Publicar hashes en IOTA y compartir órdenes en Fabric.",
+            "testStrategy": "Pruebas de interoperabilidad y verificación de hashes.",
+            "priority": "medium",
+            "dependencies": [
+              2
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 6,
+            "title": "Test & Audit Suite",
+            "description": "Configurar entorno de pruebas y auditoría para todos los contratos.",
+            "details": "Hardhat-upgrades, Slither, Echidna, pruebas de estrés y cobertura.",
+            "testStrategy": "Ejecución de toda la suite CI/CD y verificación de SLAs.",
+            "priority": "high",
+            "dependencies": [
+              4,
+              5
+            ],
+            "status": "pending"
+          }
+        ]
       },
       {
         "id": 3,
@@ -35,7 +106,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": []
       },
       {
@@ -144,7 +215,7 @@
     ],
     "metadata": {
       "created": "2025-06-25T17:41:16.732Z",
-      "updated": "2025-06-25T18:55:19.902Z",
+      "updated": "2025-06-25T21:21:43.645Z",
       "description": "Tasks for master context"
     }
   }
