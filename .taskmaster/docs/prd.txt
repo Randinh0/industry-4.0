@@ -1,0 +1,145 @@
+# Product Requirements Document (PRD)
+
+## MVP: Plataforma Industria 4.0 con Blockchain
+
+### 1. Visión del Producto
+
+Crear una plataforma digital que integre blockchain con IoT para monitorear, gestionar y financiar activos industriales, asegurando trazabilidad, automatización de órdenes de mantenimiento y pagos, y financiamiento colectivo de líneas de producción.
+
+---
+
+### 2. Objetivos del MVP
+
+* Monitorear en tiempo real maquinaria industrial mediante protocolos Modbus-TCP.
+* Tokenizar activos industriales (maquinaria, componentes, materias primas).
+* Automatizar creación de órdenes de mantenimiento con pagos en USDC.
+* Facilitar financiamiento colectivo para adquisición de maquinaria con cálculo automático de dividendos.
+* Proporcionar una interfaz web para la visualización del rendimiento y estado de plantas industriales interconectadas.
+
+---
+
+### 3. Características Principales
+
+#### 3.1 Monitoreo Continuo
+
+* Comunicación constante vía Modbus-TCP.
+* Captura y transmisión en tiempo real de métricas operativas (estado, temperatura, RPM).
+
+#### 3.2 Tokenización (ERC-721)
+
+* Cada activo representado por un token ERC-721 único.
+* Registro y actualización de metadatos operativos on-chain.
+
+#### 3.3 Mantenimiento Automatizado
+
+* Contrato inteligente que emite órdenes automáticamente en función de métricas.
+* Escrow automático en USDC hasta confirmación de mantenimiento.
+
+#### 3.4 Financiamiento Colectivo
+
+* Campañas para adquisición de activos industriales.
+* Recaudación en USDC, emisión proporcional de tokens ERC-20 para inversores.
+* Dividendos automáticos basados en rendimiento operativo.
+
+#### 3.5 Dashboard Multiplanta
+
+* Visualización gráfica de métricas, estados e incidencias.
+* Interconexión de múltiples plantas industriales.
+* Actualización en tiempo real vía GraphQL subscriptions.
+
+---
+
+### 4. Stack Tecnológico
+
+#### Backend
+
+* **Blockchain:** Ethereum (red local vía Hardhat), Solidity
+* **Frameworks:** Hardhat, ethers.js
+* **IoT Gateway:** Node-RED
+* **Broker Mensajería:** MQTT/NATS
+* **API Central:** NestJS, GraphQL, Redis Streams
+* **Base de Datos Analítica:** TimescaleDB
+
+#### Frontend
+
+* **Framework:** Next.js (14)
+* **Estilo:** Tailwind CSS, shadcn/ui
+* **Visualización Gráfica:** Recharts
+* **Gestión Estado Web3:** wagmi
+
+---
+
+### 5. Dependencias
+
+#### 5.1 Hardware
+
+* PLC con soporte Modbus-TCP.
+* Servidor local para ejecución Node-RED y gateway MQTT.
+
+#### 5.2 Software
+
+* **Node-RED:** node-red-contrib-modbus, node-red-contrib-ethers
+* **Blockchain:** Solidity 0.8.25, OpenZeppelin (ERC-721/ERC-20)
+* **Broker Mensajería:** MQTT broker (Mosquitto)
+* **Backend:** Node.js, NestJS, Redis, GraphQL
+* **Frontend:** Next.js 14, React 18, Apollo GraphQL Client, shadcn/ui, Recharts, wagmi
+* **Bases de datos:** Redis, TimescaleDB
+
+#### 5.3 Infraestructura
+
+* Servidor en la nube para backend/API central (AWS, Azure o GCP)
+* Vercel (para despliegue frontend)
+* Almacenamiento descentralizado metadatos (IPFS, Pinata)
+
+#### 5.4 Seguridad
+
+* TLS/SSL para comunicación segura entre planta y backend.
+* Gestión segura de claves privadas (Hashicorp Vault o AWS KMS).
+
+---
+
+### 6. Flujo de Trabajo del Usuario
+
+* **Operador planta:** Visualiza dashboard, recibe alertas automáticas, emite órdenes manualmente cuando es necesario.
+* **Inversor:** Visualiza campañas abiertas, invierte mediante USDC, recibe dividendos automáticos.
+* **Técnico mantenimiento:** Recibe órdenes asignadas en la interfaz, confirma ejecución.
+
+---
+
+### 7. Métricas Clave del MVP
+
+* Tiempo medio entre fallos (MTBF)
+* Rendimiento promedio de producción
+* Porcentaje de automatización órdenes mantenimiento
+* Retorno inversión (ROI) en campañas crowdfunding
+* Número de plantas integradas
+
+---
+
+### 8. Riesgos y Mitigación
+
+* **Latencia alta en comunicación IoT:** Mitigar con uso eficiente de Redis Streams y MQTT.
+* **Problemas de escalabilidad:** Uso de arquitectura de microservicios, desacople MQTT.
+* **Seguridad de claves privadas:** Implementar solución robusta (HSM/Vault).
+* **Dependencias externas (USDC):** Uso de stablecoin confiable (Circle USDC).
+
+---
+
+### 9. Hoja de Ruta Inicial
+
+1. Configuración entorno blockchain (Hardhat).
+2. Despliegue contrato ERC-721 para tokenización activos.
+3. Integración Modbus-TCP con Node-RED.
+4. Desarrollo contratos inteligentes de mantenimiento y crowdfunding.
+5. Implementación backend NestJS con MQTT y Redis Streams.
+6. Desarrollo interfaz frontend Next.js.
+7. Testeo de integración y flujo completo.
+8. Primera demostración funcional con datos simulados.
+
+---
+
+### 10. Próximos pasos (Post-MVP)
+
+* Integración con ERP empresarial (SAP).
+* Migración a red L2 (Polygon/Arbitrum).
+* Implementación analítica avanzada con machine learning para mantenimiento predictivo.
