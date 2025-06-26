@@ -14,83 +14,45 @@
       },
       {
         "id": 2,
-        "title": "Tokenización y Coordinación Industrial On-Chain",
-        "description": "Diseñar y desplegar la lógica on-chain que representa máquinas, materias primas y procesos productivos, incluyendo coordinación, mantenimiento y trazabilidad.",
-        "details": "Subtareas:\n2.1 IndustrialAssetNFT v2 (ERC-721): Mejora del contrato existente para incluir nuevos roles, campos de metadatos y firma EIP-712.\n2.2 ProductionTrace1155 (ERC-1155): Tokenización de lotes de materia prima y registro de operaciones.\n2.3 MachineCoordinator (UUPS): Orquestación de procesos productivos con modos de máquina y SLA.\n2.4 MaintenanceEscrow (UUPS): Escrow en USDC con doble validación (técnico + Node-RED) y penalizaciones.\n2.5 ConsortiumConnect (Fabric & IOTA): Bridge y anclaje de datos de alta frecuencia.\n2.6 Test & Audit Suite: Hardhat-upgrades, Slither, Echidna y pruebas de estrés.\n\nConsorcios incluidos:\n- Hyperledger Fabric Bridge\n- IOTA Anchoring\n\nDependencias entre subtareas:\n- 2.3 depende de 2.1\n- 2.4 depende de 2.1 y 2.3\n- 2.5 depende de 2.2\n- 2.6 depende de 2.4 y 2.5",
-        "testStrategy": "Cada subtarea define pruebas unitarias e integración; la suite global (2.6) ejecuta escenarios end-to-end, análisis estático y fuzzing.",
+        "title": "Fabric Layer – Tokenización y Trazabilidad Privada",
+        "description": "Diseñar e implementar la red Hyperledger Fabric para tokenizar activos industriales y registrar la trazabilidad de procesos.",
+        "details": "Incluye chaincodes AssetRegistry, ProcessTrace y MachineCoordinator, configuración de nodos y canal factory-core, así como pruebas unitarias e integración.",
+        "testStrategy": "1. Pruebas unitarias de chaincode con Fabric-test-network\n2. Pruebas de integración simuladas con datos IoT\n3. Verificación de eventos y SLA.",
         "priority": "high",
         "dependencies": [
           1
         ],
-        "status": "in-progress",
+        "status": "pending",
         "subtasks": [
           {
             "id": 1,
-            "title": "IndustrialAssetNFT v2 (ERC-721)",
-            "description": "Extender el contrato NFT existente con nuevos roles, metadatos y firma EIP-712.",
-            "details": "Implementar nuevos campos on-chain, roles AccessControl y función syncOperationalData.",
-            "testStrategy": "Tests Hardhat para mint, roles, syncOperationalData y eventos.",
+            "title": "AssetRegistry Chaincode",
+            "description": "Tokenizar activos físicos como registros inmutables.",
+            "details": "Campos owner, location, type y metadataIoT.",
+            "testStrategy": "Pruebas CRUD en red local Fabric.",
             "priority": "high",
             "dependencies": [],
-            "status": "done"
+            "status": "pending"
           },
           {
             "id": 2,
-            "title": "ProductionTrace1155 (ERC-1155)",
-            "description": "Crear contrato ERC-1155 para lotes de materia prima y sus operaciones.",
-            "details": "Funciones recordInput/recordOutput, eventos TraceRecorded y consulta de trazas.",
-            "testStrategy": "Tests de balances, transferencias y registro de trazabilidad.",
+            "title": "ProcessTrace Chaincode",
+            "description": "Registrar entradas, salidas y operaciones de lotes de producción.",
+            "details": "Eventos TraceRecorded con hashes y sellos de tiempo.",
+            "testStrategy": "Pruebas de registro y consulta de trazabilidad.",
             "priority": "high",
             "dependencies": [],
             "status": "pending"
           },
           {
             "id": 3,
-            "title": "MachineCoordinator (UUPS)",
-            "description": "Desarrollar coordinador de procesos productivos con reglas de secuencia y SLA.",
-            "details": "start/pause/resume/stop, setMachineMode y verificación de estados.",
-            "testStrategy": "Tests de transiciones válidas e inválidas y eventos.",
+            "title": "MachineCoordinator Chaincode",
+            "description": "Orquestar modos de máquina y verificar SLA.",
+            "details": "Funciones start/pause/resume/stop y verificación de estados.",
+            "testStrategy": "Tests de transiciones válidas e inválidas.",
             "priority": "high",
             "dependencies": [
               1
-            ],
-            "status": "pending"
-          },
-          {
-            "id": 4,
-            "title": "MaintenanceEscrow (UUPS)",
-            "description": "Implementar escrow USDC con doble validación.",
-            "details": "Funciones requestMaintenance, confirmService, releasePayment, penalizaciones y SLA.",
-            "testStrategy": "Tests de flujo completo escrow, roles y penalizaciones.",
-            "priority": "high",
-            "dependencies": [
-              1,
-              3
-            ],
-            "status": "pending"
-          },
-          {
-            "id": 5,
-            "title": "ConsortiumConnect (Fabric & IOTA)",
-            "description": "Bridge y anclaje de datos con Hyperledger Fabric e IOTA.",
-            "details": "Publicar hashes en IOTA y compartir órdenes en Fabric.",
-            "testStrategy": "Pruebas de interoperabilidad y verificación de hashes.",
-            "priority": "medium",
-            "dependencies": [
-              2
-            ],
-            "status": "pending"
-          },
-          {
-            "id": 6,
-            "title": "Test & Audit Suite",
-            "description": "Configurar entorno de pruebas y auditoría para todos los contratos.",
-            "details": "Hardhat-upgrades, Slither, Echidna, pruebas de estrés y cobertura.",
-            "testStrategy": "Ejecución de toda la suite CI/CD y verificación de SLAs.",
-            "priority": "high",
-            "dependencies": [
-              4,
-              5
             ],
             "status": "pending"
           }
@@ -98,6 +60,89 @@
       },
       {
         "id": 3,
+        "title": "EVM Layer – Finanzas Descentralizadas y Crowdfunding",
+        "description": "Desarrollar contratos Solidity para mantenimiento, crowdfunding y distribución de ingresos en red EVM.",
+        "details": "Incluye MaintenanceEscrow.sol, IndustrialCrowdfunding.sol y RevenueDistributor.sol desplegados en red pública o consorciada compatible con EVM.",
+        "testStrategy": "1. Pruebas unitarias con Hardhat\n2. Auditoría con Slither/Echidna\n3. Escenarios de flujo completo de pagos y dividendos.",
+        "priority": "high",
+        "dependencies": [
+          1
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "MaintenanceEscrow.sol",
+            "description": "Escrow USDC con doble validación y penalizaciones SLA.",
+            "details": "",
+            "testStrategy": "",
+            "priority": "high",
+            "dependencies": [],
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "IndustrialCrowdfunding.sol",
+            "description": "Recaudación en stablecoins y emisión de tokens.",
+            "details": "",
+            "testStrategy": "",
+            "priority": "high",
+            "dependencies": [],
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "RevenueDistributor.sol",
+            "description": "Distribución automática de retornos a inversores.",
+            "details": "",
+            "testStrategy": "",
+            "priority": "high",
+            "dependencies": [
+              2
+            ],
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 4,
+        "title": "CrossChain Orchestrator y Suite QA",
+        "description": "Implementar servicio de mensajería Fabric↔EVM y configurar pruebas integrales y auditorías de seguridad.",
+        "details": "Microservicio TypeScript basado en Hyperledger Cactus o Weaver; incluye pipeline de CI/CD y pruebas end-to-end.",
+        "testStrategy": "1. Tests de integración escuchando eventos Fabric y EVM\n2. Pruebas de carga y resiliencia\n3. Cobertura de seguridad en CI/CD.",
+        "priority": "high",
+        "dependencies": [
+          2,
+          3
+        ],
+        "status": "pending",
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "CrossChainMessenger Service",
+            "description": "Escucha y propaga eventos Fabric↔EVM.",
+            "details": "",
+            "testStrategy": "",
+            "priority": "high",
+            "dependencies": [],
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "End-to-End Test Suite",
+            "description": "Escenarios con datos simulados y CI/CD.",
+            "details": "",
+            "testStrategy": "",
+            "priority": "high",
+            "dependencies": [
+              1
+            ],
+            "status": "pending"
+          }
+        ]
+      },
+      {
+        "id": 5,
         "title": "Integración Modbus-TCP con Node-RED",
         "description": "Configurar Node-RED como gateway IoT para comunicación con PLCs industriales mediante protocolo Modbus-TCP, capturando y transmitiendo métricas operativas en tiempo real.",
         "details": "1. Instalar Node-RED: `npm install -g node-red`\n2. Configurar nodos adicionales: `npm install node-red-contrib-modbus node-red-contrib-ethers node-red-contrib-mqtt-broker`\n3. Crear flujo de Node-RED para:\n   - Conexión Modbus-TCP con PLCs (configurar IP, puerto, intervalo de polling)\n   - Lectura de registros Modbus (estado, temperatura, RPM)\n   - Transformación de datos a formato JSON\n   - Publicación en broker MQTT (Mosquitto)\n4. Implementar manejo de errores y reconexión automática\n5. Configurar autenticación segura para MQTT\n6. Implementar función para firmar transacciones Ethereum (actualización de metadatos on-chain)\n7. Configurar persistencia local para datos en caso de desconexión\n8. Implementar dashboard básico en Node-RED para monitoreo local",
@@ -107,58 +152,91 @@
           1
         ],
         "status": "in-progress",
-        "subtasks": []
+        "subtasks": [
+          {
+            "id": 1,
+            "title": "Listener Modbus (Fin de Operación)",
+            "description": "Configurar nodos modbus-read que detectan la finalización de cada proceso en el PLC.",
+            "details": "Leer registro holding/coil que indica FIN; normalizar señal y almacenar estado en contexto Node-RED.",
+            "testStrategy": "Simular cambio de registro con ModbusPal y verificar recepción en Node-RED.",
+            "priority": "high",
+            "dependencies": [],
+            "status": "pending"
+          },
+          {
+            "id": 2,
+            "title": "Invocador Fabric SDK",
+            "description": "Sub-flow con nodo function + módulo npm fabric-network para llamar chaincode.",
+            "details": "Llama al chaincode TokenLifecycle con createProcessToken(assetId, etapa, datos).",
+            "testStrategy": "Pruebas con red Fabric local y verificación de transacciones en ledger.",
+            "priority": "high",
+            "dependencies": [
+              1
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 3,
+            "title": "Notificador Siguiente Máquina",
+            "description": "Emitir evento MQTT/webhook para habilitar la siguiente celda de producción.",
+            "details": "Publicar en tópico factory/next-machine/{machineId} con payload de activación.",
+            "testStrategy": "Verificar recepción en máquinas simuladas y activación correcta de flujos.",
+            "priority": "high",
+            "dependencies": [
+              2
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 4,
+            "title": "Gestión de Estados y Reconexión",
+            "description": "Implementar watchdog de PLCs y manejo robusto de desconexiones Modbus.",
+            "details": "Heartbeat cada 30s, reconexión automática y logging de eventos de conectividad.",
+            "testStrategy": "Simular desconexiones y verificar recuperación automática del sistema.",
+            "priority": "medium",
+            "dependencies": [
+              1
+            ],
+            "status": "pending"
+          },
+          {
+            "id": 5,
+            "title": "Dashboard de Monitoreo Local",
+            "description": "Interfaz Node-RED para visualizar estado de celdas y tokens emitidos.",
+            "details": "Gráficos de estado por máquina, contador de tokens y alertas de sincronización.",
+            "testStrategy": "Verificar actualización en tiempo real y representación correcta de datos.",
+            "priority": "low",
+            "dependencies": [
+              1,
+              2,
+              3
+            ],
+            "status": "pending"
+          }
+        ]
       },
       {
-        "id": 4,
-        "title": "Implementación de Contratos Inteligentes para Mantenimiento y Crowdfunding",
-        "description": "Desarrollar contratos inteligentes para la automatización de órdenes de mantenimiento basadas en métricas operativas y para el financiamiento colectivo de activos industriales con distribución de dividendos.",
-        "details": "1. Contrato de Mantenimiento (`MaintenanceContract.sol`):\n   - Función para crear órdenes de mantenimiento automáticas basadas en umbrales\n   - Sistema de escrow para pagos en USDC\n   - Confirmación de servicio completado\n   - Liberación automática de fondos tras verificación\n   - Historial de mantenimientos por activo\n\n2. Contrato de Crowdfunding (`IndustrialCrowdfunding.sol`):\n   - Integración con ERC-20 para tokens de inversión\n   - Recaudación en USDC\n   - Emisión proporcional de tokens a inversores\n   - Cálculo y distribución automática de dividendos\n   - Estados de campaña (activa, completada, cancelada)\n   - Timelock para fondos recaudados\n\n3. Implementar interfaces para interacción con USDC\n4. Configurar roles y permisos (administrador, operador, inversor)\n5. Implementar mecanismos de seguridad (pausable, reentrancy guards)",
-        "testStrategy": "1. Tests unitarios para cada función de los contratos\n2. Tests de integración entre contratos de mantenimiento, crowdfunding y tokenización\n3. Pruebas de seguridad (reentrancy, overflow, etc.)\n4. Simulación de escenarios completos (creación orden → confirmación → pago)\n5. Pruebas de distribución de dividendos con diferentes escenarios\n6. Auditoría de seguridad con herramientas automatizadas",
-        "priority": "high",
-        "dependencies": [
-          1,
-          2
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 5,
+        "id": 6,
         "title": "Desarrollo de Backend NestJS con MQTT y Redis Streams",
         "description": "Implementar un backend basado en NestJS que integre MQTT para comunicación con dispositivos IoT y Redis Streams para procesamiento de datos en tiempo real, exponiendo una API GraphQL.",
         "details": "1. Inicializar proyecto NestJS: `nest new backend`\n2. Configurar módulos necesarios:\n   - MQTT: `npm install @nestjs/microservices mqtt`\n   - GraphQL: `npm install @nestjs/graphql @nestjs/apollo graphql apollo-server-express`\n   - Redis: `npm install ioredis @nestjs/redis`\n   - TimescaleDB: `npm install pg typeorm @nestjs/typeorm`\n3. Implementar estructura de microservicios:\n   - Servicio de dispositivos IoT (conexión MQTT)\n   - Servicio de blockchain (interacción con contratos)\n   - Servicio de analítica (TimescaleDB)\n   - Servicio de notificaciones\n4. Configurar Redis Streams para procesamiento de datos en tiempo real\n5. Implementar esquema GraphQL con queries, mutations y subscriptions\n6. Configurar autenticación y autorización (JWT)\n7. Implementar lógica de negocio para:\n   - Registro y monitoreo de dispositivos\n   - Procesamiento de métricas operativas\n   - Interacción con contratos inteligentes\n   - Almacenamiento histórico en TimescaleDB",
         "testStrategy": "1. Tests unitarios para cada servicio y resolver\n2. Tests de integración para flujos completos\n3. Pruebas de carga con Artillery o similar\n4. Verificar manejo de errores y resiliencia\n5. Pruebas de integración con MQTT y Redis\n6. Validar subscriptions GraphQL para actualizaciones en tiempo real\n7. Pruebas de seguridad (autenticación, autorización)",
         "priority": "medium",
         "dependencies": [
-          3,
-          4
-        ],
-        "status": "pending",
-        "subtasks": []
-      },
-      {
-        "id": 6,
-        "title": "Desarrollo de Interfaz Frontend con Next.js 14",
-        "description": "Crear una interfaz de usuario moderna y responsiva utilizando Next.js 14, Tailwind CSS y shadcn/ui para visualizar el estado de plantas industriales, gestionar activos tokenizados y participar en campañas de financiamiento.",
-        "details": "1. Inicializar proyecto Next.js 14: `npx create-next-app@latest --typescript`\n2. Configurar Tailwind CSS y shadcn/ui\n3. Instalar dependencias:\n   - Apollo Client: `npm install @apollo/client graphql`\n   - Wagmi: `npm install wagmi viem @tanstack/react-query`\n   - Recharts: `npm install recharts`\n4. Implementar estructura de carpetas siguiendo el patrón de características\n5. Crear componentes principales:\n   - Dashboard de planta industrial con métricas en tiempo real\n   - Visualización de activos tokenizados\n   - Panel de órdenes de mantenimiento\n   - Interfaz de campañas de crowdfunding\n   - Wallet connection y gestión de transacciones\n6. Implementar sistema de rutas y navegación\n7. Configurar subscriptions GraphQL para actualizaciones en tiempo real\n8. Implementar sistema de autenticación y autorización\n9. Crear visualizaciones con Recharts para métricas operativas\n10. Implementar tema claro/oscuro y accesibilidad",
-        "testStrategy": "1. Tests unitarios con Jest y React Testing Library\n2. Tests de integración para flujos de usuario completos\n3. Pruebas de rendimiento con Lighthouse\n4. Validación de accesibilidad (WCAG)\n5. Pruebas de compatibilidad cross-browser\n6. Pruebas de responsividad en diferentes dispositivos\n7. Validar integración con wallet (Metamask, WalletConnect)",
-        "priority": "medium",
-        "dependencies": [
-          5
+          5,
+          3
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 7,
-        "title": "Implementación de Sistema de Visualización Gráfica Multiplanta",
-        "description": "Desarrollar un sistema de visualización gráfica que permita monitorear múltiples plantas industriales interconectadas, con actualización en tiempo real de métricas, estados e incidencias mediante GraphQL subscriptions.",
-        "details": "1. Diseñar componentes de visualización con Recharts:\n   - Gráficos de línea para métricas temporales (temperatura, RPM)\n   - Gráficos de barras para comparativas entre plantas\n   - Indicadores de estado tipo gauge\n   - Mapas de calor para identificar zonas críticas\n2. Implementar sistema de filtrado y agrupación por:\n   - Planta industrial\n   - Tipo de maquinaria\n   - Estado operativo\n   - Métricas específicas\n3. Crear dashboard configurable por el usuario\n4. Implementar sistema de alertas visuales\n5. Configurar subscriptions GraphQL para actualización en tiempo real\n6. Desarrollar vista de mapa para ubicación geográfica de plantas\n7. Implementar exportación de datos y reportes\n8. Crear sistema de comparación histórica de rendimiento",
-        "testStrategy": "1. Tests unitarios para componentes de visualización\n2. Pruebas de rendimiento con grandes volúmenes de datos\n3. Validar actualización en tiempo real con subscriptions\n4. Pruebas de usabilidad con usuarios finales\n5. Verificar correcta representación de datos en diferentes escenarios\n6. Pruebas de exportación y generación de reportes",
+        "title": "Desarrollo de Interfaz Frontend con Next.js 14",
+        "description": "Crear una interfaz de usuario moderna y responsiva utilizando Next.js 14, Tailwind CSS y shadcn/ui para visualizar el estado de plantas industriales, gestionar activos tokenizados y participar en campañas de financiamiento.",
+        "details": "1. Inicializar proyecto Next.js 14: `npx create-next-app@latest --typescript`\n2. Configurar Tailwind CSS y shadcn/ui\n3. Instalar dependencias:\n   - Apollo Client: `npm install @apollo/client graphql`\n   - Wagmi: `npm install wagmi viem @tanstack/react-query`\n   - Recharts: `npm install recharts`\n4. Implementar estructura de carpetas siguiendo el patrón de características\n5. Crear componentes principales:\n   - Dashboard de planta industrial con métricas en tiempo real\n   - Visualización de activos tokenizados\n   - Panel de órdenes de mantenimiento\n   - Interfaz de campañas de crowdfunding\n   - Wallet connection y gestión de transacciones\n6. Implementar sistema de rutas y navegación\n7. Configurar subscriptions GraphQL para actualizaciones en tiempo real\n8. Implementar sistema de autenticación y autorización\n9. Crear visualizaciones con Recharts para métricas operativas\n10. Implementar tema claro/oscuro y accesibilidad",
+        "testStrategy": "1. Tests unitarios con Jest y React Testing Library\n2. Tests de integración para flujos de usuario completos\n3. Pruebas de rendimiento con Lighthouse\n4. Validación de accesibilidad (WCAG)\n5. Pruebas de compatibilidad cross-browser\n6. Pruebas de responsividad en diferentes dispositivos\n7. Validar integración con wallet (Metamask, WalletConnect)",
         "priority": "medium",
         "dependencies": [
-          5,
           6
         ],
         "status": "pending",
@@ -166,52 +244,68 @@
       },
       {
         "id": 8,
-        "title": "Integración de Sistema de Pagos con USDC",
-        "description": "Implementar la integración con USDC para habilitar pagos automáticos en órdenes de mantenimiento y permitir inversiones en campañas de crowdfunding, asegurando la correcta gestión de transacciones y balances.",
-        "details": "1. Integrar contratos de USDC mediante interfaces ERC-20\n2. Implementar funciones para:\n   - Aprobación y transferencia de USDC\n   - Verificación de balances\n   - Gestión de allowances\n3. Desarrollar sistema de escrow para pagos de mantenimiento\n4. Implementar mecanismo de distribución de dividendos\n5. Crear interfaz de usuario para:\n   - Visualización de balances\n   - Aprobación de gastos\n   - Historial de transacciones\n6. Implementar notificaciones para eventos de pago\n7. Configurar sistema de reconciliación y auditoría\n8. Implementar mecanismos de seguridad adicionales para transacciones",
-        "testStrategy": "1. Tests unitarios para funciones de pago\n2. Tests de integración con contratos de USDC\n3. Pruebas de escenarios completos (inversión, mantenimiento, dividendos)\n4. Validar manejo de errores en transacciones\n5. Pruebas de seguridad para aprobaciones y transferencias\n6. Verificar correcta distribución de dividendos en diferentes escenarios",
-        "priority": "high",
+        "title": "Implementación de Sistema de Visualización Gráfica Multiplanta",
+        "description": "Desarrollar un sistema de visualización gráfica que permita monitorear múltiples plantas industriales interconectadas, con actualización en tiempo real de métricas, estados e incidencias mediante GraphQL subscriptions.",
+        "details": "1. Diseñar componentes de visualización con Recharts:\n   - Gráficos de línea para métricas temporales (temperatura, RPM)\n   - Gráficos de barras para comparativas entre plantas\n   - Indicadores de estado tipo gauge\n   - Mapas de calor para identificar zonas críticas\n2. Implementar sistema de filtrado y agrupación por:\n   - Planta industrial\n   - Tipo de maquinaria\n   - Estado operativo\n   - Métricas específicas\n3. Crear dashboard configurable por el usuario\n4. Implementar sistema de alertas visuales\n5. Configurar subscriptions GraphQL para actualización en tiempo real\n6. Desarrollar vista de mapa para ubicación geográfica de plantas\n7. Implementar exportación de datos y reportes\n8. Crear sistema de comparación histórica de rendimiento",
+        "testStrategy": "1. Tests unitarios para componentes de visualización\n2. Pruebas de rendimiento con grandes volúmenes de datos\n3. Validar actualización en tiempo real con subscriptions\n4. Pruebas de usabilidad con usuarios finales\n5. Verificar correcta representación de datos en diferentes escenarios\n6. Pruebas de exportación y generación de reportes",
+        "priority": "medium",
         "dependencies": [
-          4,
-          6
+          6,
+          7
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 9,
-        "title": "Implementación de Seguridad y Gestión de Claves",
-        "description": "Configurar un sistema robusto para la gestión segura de claves privadas y comunicaciones, implementando TLS/SSL para conexiones entre plantas y backend, y utilizando soluciones como Hashicorp Vault o AWS KMS.",
-        "details": "1. Configurar TLS/SSL para todas las comunicaciones:\n   - MQTT con certificados\n   - API GraphQL con HTTPS\n   - Conexiones WebSocket seguras\n2. Implementar gestión de claves privadas:\n   - Configurar Hashicorp Vault o AWS KMS\n   - Desarrollar sistema de rotación de claves\n   - Implementar políticas de acceso\n3. Configurar autenticación y autorización:\n   - JWT para API\n   - OAuth2 para usuarios\n   - Roles y permisos granulares\n4. Implementar auditoría de seguridad:\n   - Logging de eventos críticos\n   - Monitoreo de actividad sospechosa\n   - Alertas de seguridad\n5. Configurar firewalls y reglas de acceso\n6. Implementar protección contra ataques comunes (DDOS, inyección, etc.)",
-        "testStrategy": "1. Auditoría de seguridad con herramientas automatizadas\n2. Pruebas de penetración\n3. Verificar configuración correcta de TLS/SSL\n4. Validar gestión segura de claves privadas\n5. Pruebas de rotación de claves\n6. Verificar políticas de acceso y permisos\n7. Simular escenarios de ataque y validar respuesta",
+        "title": "Integración de Sistema de Pagos con USDC",
+        "description": "Implementar la integración con USDC para habilitar pagos automáticos en órdenes de mantenimiento y permitir inversiones en campañas de crowdfunding, asegurando la correcta gestión de transacciones y balances.",
+        "details": "1. Integrar contratos de USDC mediante interfaces ERC-20\n2. Implementar funciones para:\n   - Aprobación y transferencia de USDC\n   - Verificación de balances\n   - Gestión de allowances\n3. Desarrollar sistema de escrow para pagos de mantenimiento\n4. Implementar mecanismo de distribución de dividendos\n5. Crear interfaz de usuario para:\n   - Visualización de balances\n   - Aprobación de gastos\n   - Historial de transacciones\n6. Implementar notificaciones para eventos de pago\n7. Configurar sistema de reconciliación y auditoría\n8. Implementar mecanismos de seguridad adicionales para transacciones",
+        "testStrategy": "1. Tests unitarios para funciones de pago\n2. Tests de integración con contratos de USDC\n3. Pruebas de escenarios completos (inversión, mantenimiento, dividendos)\n4. Validar manejo de errores en transacciones\n5. Pruebas de seguridad para aprobaciones y transferencias\n6. Verificar correcta distribución de dividendos en diferentes escenarios",
         "priority": "high",
         "dependencies": [
           3,
-          5
+          7
         ],
         "status": "pending",
         "subtasks": []
       },
       {
         "id": 10,
+        "title": "Implementación de Seguridad y Gestión de Claves",
+        "description": "Configurar un sistema robusto para la gestión segura de claves privadas y comunicaciones, implementando TLS/SSL para conexiones entre plantas y backend, y utilizando soluciones como Hashicorp Vault o AWS KMS.",
+        "details": "1. Configurar TLS/SSL para todas las comunicaciones:\n   - MQTT con certificados\n   - API GraphQL con HTTPS\n   - Conexiones WebSocket seguras\n2. Implementar gestión de claves privadas:\n   - Configurar Hashicorp Vault o AWS KMS\n   - Desarrollar sistema de rotación de claves\n   - Implementar políticas de acceso\n3. Configurar autenticación y autorización:\n   - JWT para API\n   - OAuth2 para usuarios\n   - Roles y permisos granulares\n4. Implementar auditoría de seguridad:\n   - Logging de eventos críticos\n   - Monitoreo de actividad sospechosa\n   - Alertas de seguridad\n5. Configurar firewalls y reglas de acceso\n6. Implementar protección contra ataques comunes (DDOS, inyección, etc.)",
+        "testStrategy": "1. Auditoría de seguridad con herramientas automatizadas\n2. Pruebas de penetración\n3. Verificar configuración correcta de TLS/SSL\n4. Validar gestión segura de claves privadas\n5. Pruebas de rotación de claves\n6. Verificar políticas de acceso y permisos\n7. Simular escenarios de ataque y validar respuesta",
+        "priority": "high",
+        "dependencies": [
+          5,
+          6
+        ],
+        "status": "pending",
+        "subtasks": []
+      },
+      {
+        "id": 11,
         "title": "Pruebas de Integración y Despliegue",
         "description": "Realizar pruebas de integración del sistema completo, configurar infraestructura de despliegue y preparar la primera demostración funcional con datos simulados.",
         "details": "1. Configurar entornos de despliegue:\n   - Backend en AWS/Azure/GCP\n   - Frontend en Vercel\n   - Blockchain local para pruebas\n   - IPFS con Pinata para metadatos\n2. Implementar pipeline CI/CD:\n   - GitHub Actions o similar\n   - Tests automáticos\n   - Despliegue automático\n3. Realizar pruebas de integración end-to-end:\n   - Flujo completo desde lectura de datos Modbus hasta visualización\n   - Proceso de tokenización de activos\n   - Ciclo de mantenimiento automatizado\n   - Campaña de crowdfunding y distribución de dividendos\n4. Configurar monitoreo y alertas:\n   - Logs centralizados\n   - Métricas de rendimiento\n   - Alertas de disponibilidad\n5. Preparar datos simulados para demostración\n6. Documentar API y procedimientos de despliegue\n7. Crear guías de usuario para diferentes roles",
         "testStrategy": "1. Pruebas end-to-end con Cypress o similar\n2. Validar despliegue en diferentes entornos\n3. Pruebas de carga y rendimiento\n4. Verificar correcta configuración de infraestructura\n5. Simular escenarios de fallo y recuperación\n6. Validar experiencia de usuario con datos simulados\n7. Realizar demo con stakeholders para obtener feedback",
         "priority": "medium",
         "dependencies": [
-          2,
-          3,
-          4,
           5,
           6,
           7,
           8,
-          9
+          9,
+          10,
+          2,
+          3,
+          4
         ],
         "status": "pending",
         "subtasks": []
       }
+      
     ],
     "metadata": {
       "created": "2025-06-25T17:41:16.732Z",
