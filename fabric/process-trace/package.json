@@ -1,0 +1,21 @@
+{
+  "name": "process-trace-chaincode",
+  "version": "1.0.0",
+  "description": "Chaincode ProcessTrace para trazabilidad de producción en Hyperledger Fabric",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --require ts-node/register test/**/*.test.ts"
+  },
+  "dependencies": {
+    "fabric-contract-api": "^2.4.1"
+  },
+  "devDependencies": {
+    "@types/sinon": "^17.0.4",
+    "chai": "^4.3.0",
+    "mocha": "^10.0.0",
+    "sinon": "^15.0.0",
+    "ts-node": "^10.0.0",
+    "typescript": "^5.0.0"
+  }
+}

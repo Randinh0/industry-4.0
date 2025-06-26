@@ -1,0 +1,19 @@
+{
+  "name": "asset-registry-chaincode",
+  "version": "1.0.0",
+  "description": "Chaincode AssetRegistry para Hyperledger Fabric (TypeScript)",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "test": "mocha --require ts-node/register test/**/*.test.ts"
+  },
+  "dependencies": {
+    "fabric-contract-api": "^2.4.1"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "ts-node": "^10.0.0",
+    "mocha": "^10.0.0",
+    "chai": "^4.3.0"
+  }
+} 
