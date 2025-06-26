@@ -22,7 +22,7 @@
         "dependencies": [
           1
         ],
-        "status": "pending",
+        "status": "in-progress",
         "subtasks": [
           {
             "id": 1,
@@ -32,7 +32,7 @@
             "testStrategy": "Pruebas CRUD en red local Fabric.",
             "priority": "high",
             "dependencies": [],
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 2,
@@ -42,7 +42,7 @@
             "testStrategy": "Pruebas de registro y consulta de trazabilidad.",
             "priority": "high",
             "dependencies": [],
-            "status": "pending"
+            "status": "done"
           },
           {
             "id": 3,
@@ -54,7 +54,7 @@
             "dependencies": [
               1
             ],
-            "status": "pending"
+            "status": "done"
           }
         ]
       },
@@ -305,11 +305,10 @@
         "status": "pending",
         "subtasks": []
       }
-      
     ],
     "metadata": {
       "created": "2025-06-25T17:41:16.732Z",
-      "updated": "2025-06-25T21:21:43.645Z",
+      "updated": "2025-06-26T09:26:24.027Z",
       "description": "Tasks for master context"
     }
   }
